@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15.3-alpine3.18
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_MULTIPLE_DATABASES: app_development,app_test
+    volumes:
+      - ./docker/db-init.sh:/docker-entrypoint-initdb.d/db-init.sh
