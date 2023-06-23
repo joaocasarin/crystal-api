@@ -21,7 +21,9 @@ Amber::Server.configure do
   end
 
   routes :api do
-    resources "/travel_plans", TravelPlanController, except: [:new, :edit]
+    resources "/travel_plans", TravelPlanController, except: [:new, :edit, :update, :append]
+    put "/travel_plans/:id", TravelPlanController, :update
+    patch "/travel_plans/:id", TravelPlanController, :append
   end
 
   routes :static do
