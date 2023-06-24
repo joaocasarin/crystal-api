@@ -15,39 +15,74 @@ class TravelPlanController < Amber::Controller::Base
     end
   end
 
-  #! MISSING handle optimize
+  #* DONE
   def show
     is_id_integer = params["id"].to_i?
     
-    if is_id_integer #! TODO ID is valid integer
-      if travel_plan = TravelPlan.find params["id"] #! TODO ID found
+    if is_id_integer #* DONE ID is valid integer
+      if travel_plan = TravelPlan.find params["id"] #* DONE ID found
         is_any_of_expand_or_optimize = params["expand"]? || params["optimize"]?
 
-        if is_any_of_expand_or_optimize #! TODO provided: ?expand&optimize || ?expand || ?optimize
+        if is_any_of_expand_or_optimize #* DONE provided: ?expand&optimize || ?expand || ?optimize
           locations = get_locations(travel_plan.travel_stops)
-          expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
           
-          if params["expand"]? && params["optimize"]? #! TODO provided: ?expand&optimize
-            if params["expand"] == "true" && params["optimize"] == "true" #! TODO provided: ?expand=true&optimize=true
+          if params["expand"]? && params["optimize"]? #* DONE provided: ?expand&optimize
+            expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
+            
+            if params["expand"] == "true" && params["optimize"] == "true" #* DONE provided: ?expand=true&optimize=true
+              optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
+              expanded_and_optimized_travel_stops = expand_travel_stops(optimized_travel_stops, locations)
               respond_with 200 do
-                json "both provided, both true"
+                body = {
+                  id: travel_plan.id.not_nil!,
+                  travel_stops: expanded_and_optimized_travel_stops.map do |travel_stop|
+                    {
+                      id: travel_stop["id"],
+                      name: travel_stop["name"],
+                      type: travel_stop["type"],
+                      dimension: travel_stop["dimension"],
+                    }
+                  end
+                }.to_json
+                json body
               end
-            elsif params["expand"] == "true" && params["optimize"] != "true" #! TODO provided: ?expand=true&optimize=false
+            elsif params["expand"] == "true" && params["optimize"] != "true" #* DONE provided: ?expand=true&optimize=false
               respond_with 200 do
-                json "both provided, only expand true"
+                body = {
+                  id: travel_plan.id.not_nil!,
+                  travel_stops: expanded_travel_stops.map do |travel_stop|
+                    {
+                      id: travel_stop["id"],
+                      name: travel_stop["name"],
+                      type: travel_stop["type"],
+                      dimension: travel_stop["dimension"],
+                    }
+                  end
+                }.to_json
+                json body
               end
-            elsif params["expand"] != "true" && params["optimize"] == "true" #! TODO provided: ?expand=false&optimize=true
+            elsif params["expand"] != "true" && params["optimize"] == "true" #* DONE provided: ?expand=false&optimize=true
+              optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
               respond_with 200 do
-                json "both provided, only optimize true"
+                body = {
+                  id: travel_plan.id.not_nil!,
+                  travel_stops: optimized_travel_stops
+                }.to_json
+                json body
               end
-            else #! TODO provided: ?expand=false&optimize=false
+            else #* DONE provided: ?expand=false&optimize=false
               respond_with 200 do
-                json "both provided and both false"
+                body = {
+                  id: travel_plan.id.not_nil!,
+                  travel_stops: travel_plan.travel_stops
+                }.to_json
+                json body
               end
             end
-          else #! TODO provided: ?expand || ?optimize
+          else #* DONE provided: ?expand || ?optimize
             if params["expand"]? #* DONE provided: ?expand
               if params["expand"] == "true" #* DONE provided: ?expand=true
+                expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
                 respond_with 200 do
                   body = {
                     id: travel_plan.id.not_nil!,
@@ -71,14 +106,25 @@ class TravelPlanController < Amber::Controller::Base
                   json body
                 end
               end
-            elsif params["optimize"]? #! TODO provided: ?optimize
-              if params["optimize"] == "true" #! TODO provided: ?optimize=true
+            elsif params["optimize"]? #* DONE provided: ?optimize
+              if params["optimize"] == "true" #* DONE provided: ?optimize=true
+                expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
+                optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
+                puts optimized_travel_stops
                 respond_with 200 do
-                  json "only optimize, true"
+                  body = {
+                    id: travel_plan.id.not_nil!,
+                    travel_stops: optimized_travel_stops
+                  }.to_json
+                  json body
                 end
-              else #! TODO provided: ?optimize=false
+              else #* DONE provided: ?optimize=false
                 respond_with 200 do
-                  json "only optimize, false"
+                  body = {
+                    id: travel_plan.id.not_nil!,
+                    travel_stops: travel_plan.travel_stops
+                  }.to_json
+                  json body
                 end
               end
             end
@@ -329,5 +375,49 @@ class TravelPlanController < Amber::Controller::Base
     end
 
     return new_travel_stops
+  end
+
+  #* DONE
+  private def optimize_travel_stops(locations : TRAVEL_STOPS_TYPE) : Array(Int32)
+    # Calculate popularity of each location
+    location_popularity = Hash(Int32, Int32).new
+    locations.each do |location|
+      popularity = location["residents"].reduce(0) { |total, resident| total + resident["episode"].size }
+      location_popularity[location["id"]] = popularity
+    end
+
+    # Calculate popularity of each dimension
+    dimension_popularity = Hash(String, Float64).new
+    dimensions = locations.map { |location| location["dimension"] }.uniq
+    dimensions.each do |dimension|
+      popularity = locations
+        .select { |location| location["dimension"] == dimension }
+        .map { |location| location_popularity[location["id"]] }
+        .reduce(0.0) { |sum, value| sum + value }
+      dimension_popularity[dimension] = popularity / locations.count { |location| location["dimension"] == dimension }
+    end
+
+    # Sort locations by popularity in descending order and then by name alphabetically within each dimension
+    sorted_locations = locations.sort do |a, b|
+      a_dimension_popularity = dimension_popularity[a["dimension"]]
+      b_dimension_popularity = dimension_popularity[b["dimension"]]
+    
+      if a_dimension_popularity == b_dimension_popularity
+        a_location_popularity = location_popularity[a["id"]]
+        b_location_popularity = location_popularity[b["id"]]
+    
+        if a_location_popularity == b_location_popularity
+          a["name"] <=> b["name"] # Sort alphabetically
+        else
+          a_location_popularity <=> b_location_popularity # Sort by ascending popularity
+        end
+      else
+        a_dimension_popularity <=> b_dimension_popularity # Sort by ascending dimension popularity
+      end
+    end
+    
+    sorted_location_ids = sorted_locations.map { |location| location["id"] }
+
+    return sorted_location_ids
   end
 end
