@@ -19,5 +19,6 @@ require "./database"
 require "../src/models/**"
 # End Generator Dependencies
 
+require "../src/utils/**"
 require "../src/controllers/**"
 require "./routes"
