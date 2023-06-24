@@ -110,7 +110,6 @@ class TravelPlanController < Amber::Controller::Base
               if params["optimize"] == "true" #* DONE provided: ?optimize=true
                 expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
                 optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
-                puts optimized_travel_stops
                 respond_with 200 do
                   body = {
                     id: travel_plan.id.not_nil!,
