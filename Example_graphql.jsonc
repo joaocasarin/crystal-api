@@ -1,0 +1,205 @@
+/**
+    * endpoint: https://rickandmortyapi.com/graphql
+    * query:
+        query LocationsByIds {
+            locationsByIds(ids: "2,7,9,11,19") {
+                id
+                name
+                dimension
+                type
+                residents {
+                    episode {
+                        id
+                        name
+                    }
+                    id
+                    name
+                }
+            }
+        }
+ */
+/**
+    * Abadango:
+        - Dimensao: unknown
+        - Popularidade: 1
+    * Immortality Field Resort:
+        - Dimensao: unknown
+        - Popularidade: 7
+    * Purge Planet:
+        - Dimensao: Replacement Dimension
+        - Popularidade: 4
+    * Bepis 9:
+        - Dimensao: unknown
+        - Popularidade: 4
+    * Gromflom Prime:
+        - Dimensao: Replacement Dimension
+        - Popularidade: 0
+
+    * Unknown
+        - Media: (1 + 7 + 4) / 3 = 4
+    * Replacement Dimension
+        - Media: (4 + 0) / 2 = 2
+*/
+{
+    "data": {
+        "locationsByIds": [
+            {
+                "id": "2",
+                "name": "Abadango",
+                "dimension": "unknown",
+                "type": "Cluster",
+                "residents": [
+                    {
+                        "episode": [
+                            {
+                                "id": "27",
+                                "name": "Rest and Ricklaxation"
+                            }
+                        ],
+                        "id": "6",
+                        "name": "Abadango Cluster Princess"
+                    }
+                ]
+            },
+            {
+                "id": "7",
+                "name": "Immortality Field Resort",
+                "dimension": "unknown",
+                "type": "Resort",
+                "residents": [
+                    {
+                        "episode": [
+                            {
+                                "id": "13",
+                                "name": "Mortynight Run"
+                            },
+                            {
+                                "id": "19",
+                                "name": "Interdimensional Cable 2: Tempting Fate"
+                            },
+                            {
+                                "id": "21",
+                                "name": "The Wedding Squanchers"
+                            },
+                            {
+                                "id": "25",
+                                "name": "Vindicators 3: The Return of Worldender"
+                            },
+                            {
+                                "id": "26",
+                                "name": "The Whirly Dirly Conspiracy"
+                            }
+                        ],
+                        "id": "23",
+                        "name": "Arcade Alien"
+                    },
+                    {
+                        "episode": [
+                            {
+                                "id": "26",
+                                "name": "The Whirly Dirly Conspiracy"
+                            }
+                        ],
+                        "id": "204",
+                        "name": "Lisa"
+                    },
+                    {
+                        "episode": [
+                            {
+                                "id": "26",
+                                "name": "The Whirly Dirly Conspiracy"
+                            }
+                        ],
+                        "id": "320",
+                        "name": "Shnoopy Bloopers"
+                    }
+                ]
+            },
+            {
+                "id": "9",
+                "name": "Purge Planet",
+                "dimension": "Replacement Dimension",
+                "type": "Planet",
+                "residents": [
+                    {
+                        "episode": [
+                            {
+                                "id": "20",
+                                "name": "Look Who's Purging Now"
+                            }
+                        ],
+                        "id": "26",
+                        "name": "Arthricia"
+                    },
+                    {
+                        "episode": [
+                            {
+                                "id": "20",
+                                "name": "Look Who's Purging Now"
+                            }
+                        ],
+                        "id": "139",
+                        "name": "General Store Owner"
+                    },
+                    {
+                        "episode": [
+                            {
+                                "id": "20",
+                                "name": "Look Who's Purging Now"
+                            }
+                        ],
+                        "id": "202",
+                        "name": "Lighthouse Keeper"
+                    },
+                    {
+                        "episode": [
+                            {
+                                "id": "20",
+                                "name": "Look Who's Purging Now"
+                            }
+                        ],
+                        "id": "273",
+                        "name": "Purge Planet Ruler"
+                    }
+                ]
+            },
+            {
+                "id": "11",
+                "name": "Bepis 9",
+                "dimension": "unknown",
+                "type": "Planet",
+                "residents": [
+                    {
+                        "episode": [
+                            {
+                                "id": "1",
+                                "name": "Pilot"
+                            },
+                            {
+                                "id": "11",
+                                "name": "Ricksy Business"
+                            },
+                            {
+                                "id": "19",
+                                "name": "Interdimensional Cable 2: Tempting Fate"
+                            },
+                            {
+                                "id": "25",
+                                "name": "Vindicators 3: The Return of Worldender"
+                            }
+                        ],
+                        "id": "35",
+                        "name": "Bepisian"
+                    }
+                ]
+            },
+            {
+                "id": "19",
+                "name": "Gromflom Prime",
+                "dimension": "Replacement Dimension",
+                "type": "Planet",
+                "residents": []
+            }
+        ]
+    }
+}
