@@ -1,7 +1,7 @@
 class TravelPlanController < Amber::Controller::Base
   alias TRAVEL_STOPS_TYPE = Array(NamedTuple(id: Int32, name: String, type: String, dimension: String, residents: Array(NamedTuple(id: Int32, episode: Array(NamedTuple(id: Int32))))))
 
-  #* DONE
+  #* DONE GET /travel_plans
   def index
     travel_plans = TravelPlan.all
     respond_with 200 do
@@ -15,7 +15,7 @@ class TravelPlanController < Amber::Controller::Base
     end
   end
 
-  #* DONE
+  #* DONE GET /travel_plans/:id
   def show
     is_id_integer = params["id"].to_i?
     
@@ -42,7 +42,7 @@ class TravelPlanController < Amber::Controller::Base
     end
   end
 
-  #* DONE
+  #* DONE POST /travel_plans
   def create
     is_travel_stops_array_of_integers = begin #* DONE check if stops are array of integers
       stops_string = travel_plan_params["travel_stops"].to_s
@@ -78,7 +78,7 @@ class TravelPlanController < Amber::Controller::Base
     end
   end
 
-  #* DONE
+  #* DONE PUT /travel_plans/:id
   def update
     is_id_integer = params["id"].to_i?
     
@@ -129,7 +129,7 @@ class TravelPlanController < Amber::Controller::Base
     end
   end
 
-  #* DONE
+  #* DONE PATCH /travel_plans/:id
   def append
     is_id_integer = params["id"].to_i?
 
@@ -195,7 +195,7 @@ class TravelPlanController < Amber::Controller::Base
     end
   end
 
-  #* DONE
+  #* DONE DELETE /travel_plans/:id
   def destroy
     is_id_integer = params["id"].to_i?
 
@@ -252,7 +252,7 @@ class TravelPlanController < Amber::Controller::Base
     return locations.as(TRAVEL_STOPS_TYPE)
   end
 
-  #* DONE
+  #* DONE expand travel stops to include location details
   private def expand_travel_stops(travel_stops : Array(Int32), locations : TRAVEL_STOPS_TYPE) : TRAVEL_STOPS_TYPE
     new_travel_stops = TRAVEL_STOPS_TYPE.new
 
@@ -267,7 +267,7 @@ class TravelPlanController < Amber::Controller::Base
     return new_travel_stops
   end
 
-  #* DONE
+  #* DONE optimize travel stops based on popularity
   private def optimize_travel_stops(locations : TRAVEL_STOPS_TYPE) : Array(Int32)
     # Calculate popularity of each location
     location_popularity = Hash(Int32, Int32).new
