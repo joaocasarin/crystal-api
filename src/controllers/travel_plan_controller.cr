@@ -21,121 +21,12 @@ class TravelPlanController < Amber::Controller::Base
     
     if is_id_integer #* DONE ID is valid integer
       if travel_plan = TravelPlan.find params["id"] #* DONE ID found
-        is_any_of_expand_or_optimize = params["expand"]? || params["optimize"]?
-
-        if is_any_of_expand_or_optimize #* DONE provided: ?expand&optimize || ?expand || ?optimize
-          locations = get_locations(travel_plan.travel_stops)
-          
-          if params["expand"]? && params["optimize"]? #* DONE provided: ?expand&optimize
-            expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
-            
-            if params["expand"] == "true" && params["optimize"] == "true" #* DONE provided: ?expand=true&optimize=true
-              optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
-              expanded_and_optimized_travel_stops = expand_travel_stops(optimized_travel_stops, locations)
-              respond_with 200 do
-                body = {
-                  id: travel_plan.id.not_nil!,
-                  travel_stops: expanded_and_optimized_travel_stops.map do |travel_stop|
-                    {
-                      id: travel_stop["id"],
-                      name: travel_stop["name"],
-                      type: travel_stop["type"],
-                      dimension: travel_stop["dimension"],
-                    }
-                  end
-                }.to_json
-                json body
-              end
-            elsif params["expand"] == "true" && params["optimize"] != "true" #* DONE provided: ?expand=true&optimize=false
-              respond_with 200 do
-                body = {
-                  id: travel_plan.id.not_nil!,
-                  travel_stops: expanded_travel_stops.map do |travel_stop|
-                    {
-                      id: travel_stop["id"],
-                      name: travel_stop["name"],
-                      type: travel_stop["type"],
-                      dimension: travel_stop["dimension"],
-                    }
-                  end
-                }.to_json
-                json body
-              end
-            elsif params["expand"] != "true" && params["optimize"] == "true" #* DONE provided: ?expand=false&optimize=true
-              optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
-              respond_with 200 do
-                body = {
-                  id: travel_plan.id.not_nil!,
-                  travel_stops: optimized_travel_stops
-                }.to_json
-                json body
-              end
-            else #* DONE provided: ?expand=false&optimize=false
-              respond_with 200 do
-                body = {
-                  id: travel_plan.id.not_nil!,
-                  travel_stops: travel_plan.travel_stops
-                }.to_json
-                json body
-              end
-            end
-          else #* DONE provided: ?expand || ?optimize
-            if params["expand"]? #* DONE provided: ?expand
-              if params["expand"] == "true" #* DONE provided: ?expand=true
-                expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
-                respond_with 200 do
-                  body = {
-                    id: travel_plan.id.not_nil!,
-                    travel_stops: expanded_travel_stops.map do |travel_stop|
-                      {
-                        id: travel_stop["id"],
-                        name: travel_stop["name"],
-                        type: travel_stop["type"],
-                        dimension: travel_stop["dimension"],
-                      }
-                    end
-                  }.to_json
-                  json body
-                end
-              else #* DONE provided: ?expand=false
-                respond_with 200 do
-                  body = {
-                    id: travel_plan.id.not_nil!,
-                    travel_stops: travel_plan.travel_stops
-                  }.to_json
-                  json body
-                end
-              end
-            elsif params["optimize"]? #* DONE provided: ?optimize
-              if params["optimize"] == "true" #* DONE provided: ?optimize=true
-                expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
-                optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
-                respond_with 200 do
-                  body = {
-                    id: travel_plan.id.not_nil!,
-                    travel_stops: optimized_travel_stops
-                  }.to_json
-                  json body
-                end
-              else #* DONE provided: ?optimize=false
-                respond_with 200 do
-                  body = {
-                    id: travel_plan.id.not_nil!,
-                    travel_stops: travel_plan.travel_stops
-                  }.to_json
-                  json body
-                end
-              end
-            end
-          end
-        else #* DONE standard response
-          respond_with 200 do
-            body = {
-              id: travel_plan.id.not_nil!,
-              travel_stops: travel_plan.travel_stops
-            }.to_json
-            json body
-          end
+        respond_with 200 do
+          body = {
+            id: travel_plan.id.not_nil!,
+            travel_stops: process_travel_stops(travel_plan, params)
+          }.to_json
+          json body
         end
       else #* DONE ID not found
         respond_with 404 do
@@ -418,5 +309,69 @@ class TravelPlanController < Amber::Controller::Base
     sorted_location_ids = sorted_locations.map { |location| location["id"] }
 
     return sorted_location_ids
+  end
+
+  #* DONE check if any of expand or optimize was passed as query parameter
+  private def is_any_of_expand_or_optimize?(params)
+    return params["expand"]? || params["optimize"]?
+  end
+
+  #* DONE remove residents key from expanded travel stops
+  private def remove_residents(travel_stops : TRAVEL_STOPS_TYPE)
+    return travel_stops.map do |travel_stop|
+      {
+        id: travel_stop["id"],
+        name: travel_stop["name"],
+        type: travel_stop["type"],
+        dimension: travel_stop["dimension"]
+      }
+    end
+  end
+
+  #* DONE process travel stops based on query parameters
+  private def process_travel_stops(travel_plan, params)
+    if is_any_of_expand_or_optimize?(params)
+      if params["expand"]? && params["optimize"]?
+        if params["expand"] == "true" && params["optimize"] == "true"
+          locations = get_locations(travel_plan.travel_stops)
+          expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
+          optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
+          expanded_and_optimized_travel_stops = expand_travel_stops(optimized_travel_stops, locations)
+          return remove_residents(expanded_and_optimized_travel_stops)
+        elsif params["expand"] == "true" && params["optimize"] != "true"
+          locations = get_locations(travel_plan.travel_stops)
+          expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
+          return remove_residents(expanded_travel_stops)
+        elsif params["expand"] != "true" && params["optimize"] == "true"
+          locations = get_locations(travel_plan.travel_stops)
+          expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
+          optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
+          return optimized_travel_stops
+        else
+          return travel_plan.travel_stops
+        end
+      elsif params["expand"]?
+        if params["expand"] == "true"
+          locations = get_locations(travel_plan.travel_stops)
+          expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
+          return remove_residents(expanded_travel_stops)
+        else
+          return travel_plan.travel_stops
+        end
+      elsif params["optimize"]?
+        if params["optimize"] == "true"
+          locations = get_locations(travel_plan.travel_stops)
+          expanded_travel_stops = expand_travel_stops(travel_plan.travel_stops, locations)
+          optimized_travel_stops = optimize_travel_stops(expanded_travel_stops)
+          return optimized_travel_stops
+        else
+          return travel_plan.travel_stops
+        end
+      else
+        return travel_plan.travel_stops
+      end
+    else
+      return travel_plan.travel_stops
+    end
   end
 end
