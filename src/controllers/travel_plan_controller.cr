@@ -1,14 +1,14 @@
 class TravelPlanController < Amber::Controller::Base
   alias TRAVEL_STOPS_TYPE = Array(NamedTuple(id: Int32, name: String, type: String, dimension: String, residents: Array(NamedTuple(id: Int32, episode: Array(NamedTuple(id: Int32))))))
 
-  #! MISSING handle expand and optimize
+  #* DONE
   def index
     travel_plans = TravelPlan.all
     respond_with 200 do
       body = travel_plans.map do |travel_plan|
         {
           id: travel_plan.id.not_nil!,
-          travel_stops: travel_plan.travel_stops
+          travel_stops: process_travel_stops(travel_plan, params)
         }
       end.to_json
       json body
