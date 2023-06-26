@@ -8,14 +8,6 @@ The Travel Plans API allows users to create travel plans through different locat
 2. Install Docker and Docker Compose.
 3. Clone the repository and navigate to the project directory.
 
-## Libraries
-
-The Travel Plans API is built using the following technologies:
-
-- Framework: Amber
-- ORM: Granite
-- Database: PostgreSQL
-
 ## Getting Started
 
 To launch the API and database, run the following command `docker compose up -d`.
@@ -30,6 +22,19 @@ Alternatively, if you have the database running locally or in another container,
 4. Run the application: `amber watch`
 
 The application will be running on `http://localhost:3000` and will watch for any changes in the project files.
+
+# Postman
+To test the API using Postman, import the file `HTTP.postman_collection-2.json` or `HTTP.postman_collection-2.1.json` into Postman.
+After importing that, you will be able to make HTTP requests to the API once that is already up and running with the database.
+
+## Libraries
+
+The Travel Plans API is built using the following technologies:
+
+- Framework: Amber
+- ORM: Granite
+- Database: PostgreSQL
+
 
 ## Endpoints
 
