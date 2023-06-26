@@ -1,0 +1,1546 @@
+{
+	"info": {
+		"_postman_id": "97395fa5-82f2-43c9-964a-efa26a4830f8",
+		"name": "HTTP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21737385"
+	},
+	"item": [
+		{
+			"name": "Get locations from Rick and Morty with POST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"query\": \"query LocationsByIds($ids: [ID!]!) { locationsByIds(ids: $ids) { id name type dimension residents { episode { id } id } } }\",\n    \"operationName\": \"LocationsByIds\",\n    \"variables\": {\n        \"ids\": \"2\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rickandmortyapi.com/graphql",
+					"protocol": "https",
+					"host": [
+						"rickandmortyapi",
+						"com"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Travel Plans",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/travel_plans",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel_plans"
+					],
+					"query": [
+						{
+							"key": "expand",
+							"value": "false",
+							"description": "Param to expand each id to object",
+							"disabled": true
+						},
+						{
+							"key": "optimize",
+							"value": "false",
+							"description": "Param to optimize the order of stops",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success getting standard response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "false",
+									"description": "Param to expand each id to object",
+									"disabled": true
+								},
+								{
+									"key": "optimize",
+									"value": "false",
+									"description": "Param to optimize the order of stops",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "71"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"travel_stops\": [\n            1,\n            2,\n            3\n        ]\n    },\n    {\n        \"id\": 2,\n        \"travel_stops\": [\n            2,\n            7,\n            9,\n            11,\n            19\n        ]\n    }\n]"
+				},
+				{
+					"name": "Success getting expanded response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans?expand=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true",
+									"description": "Param to expand each id to object"
+								},
+								{
+									"key": "optimize",
+									"value": "false",
+									"description": "Param to optimize the order of stops",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "658"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"travel_stops\": [\n            {\n                \"id\": 1,\n                \"name\": \"Earth (C-137)\",\n                \"type\": \"Planet\",\n                \"dimension\": \"Dimension C-137\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"Abadango\",\n                \"type\": \"Cluster\",\n                \"dimension\": \"unknown\"\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Citadel of Ricks\",\n                \"type\": \"Space station\",\n                \"dimension\": \"unknown\"\n            }\n        ]\n    },\n    {\n        \"id\": 2,\n        \"travel_stops\": [\n            {\n                \"id\": 2,\n                \"name\": \"Abadango\",\n                \"type\": \"Cluster\",\n                \"dimension\": \"unknown\"\n            },\n            {\n                \"id\": 7,\n                \"name\": \"Immortality Field Resort\",\n                \"type\": \"Resort\",\n                \"dimension\": \"unknown\"\n            },\n            {\n                \"id\": 9,\n                \"name\": \"Purge Planet\",\n                \"type\": \"Planet\",\n                \"dimension\": \"Replacement Dimension\"\n            },\n            {\n                \"id\": 11,\n                \"name\": \"Bepis 9\",\n                \"type\": \"Planet\",\n                \"dimension\": \"unknown\"\n            },\n            {\n                \"id\": 19,\n                \"name\": \"Gromflom Prime\",\n                \"type\": \"Planet\",\n                \"dimension\": \"Replacement Dimension\"\n            }\n        ]\n    }\n]"
+				},
+				{
+					"name": "Success getting optimized response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans?optimize=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true",
+									"description": "Param to expand each id to object",
+									"disabled": true
+								},
+								{
+									"key": "optimize",
+									"value": "true",
+									"description": "Param to optimize the order of stops"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "71"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"travel_stops\": [\n            1,\n            2,\n            3\n        ]\n    },\n    {\n        \"id\": 2,\n        \"travel_stops\": [\n            19,\n            9,\n            2,\n            11,\n            7\n        ]\n    }\n]"
+				},
+				{
+					"name": "Success getting expanded and optimized response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans?expand=true&optimize=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true",
+									"description": "Param to expand each id to object"
+								},
+								{
+									"key": "optimize",
+									"value": "true",
+									"description": "Param to optimize the order of stops"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "658"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"travel_stops\": [\n            {\n                \"id\": 1,\n                \"name\": \"Earth (C-137)\",\n                \"type\": \"Planet\",\n                \"dimension\": \"Dimension C-137\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"Abadango\",\n                \"type\": \"Cluster\",\n                \"dimension\": \"unknown\"\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Citadel of Ricks\",\n                \"type\": \"Space station\",\n                \"dimension\": \"unknown\"\n            }\n        ]\n    },\n    {\n        \"id\": 2,\n        \"travel_stops\": [\n            {\n                \"id\": 19,\n                \"name\": \"Gromflom Prime\",\n                \"type\": \"Planet\",\n                \"dimension\": \"Replacement Dimension\"\n            },\n            {\n                \"id\": 9,\n                \"name\": \"Purge Planet\",\n                \"type\": \"Planet\",\n                \"dimension\": \"Replacement Dimension\"\n            },\n            {\n                \"id\": 2,\n                \"name\": \"Abadango\",\n                \"type\": \"Cluster\",\n                \"dimension\": \"unknown\"\n            },\n            {\n                \"id\": 11,\n                \"name\": \"Bepis 9\",\n                \"type\": \"Planet\",\n                \"dimension\": \"unknown\"\n            },\n            {\n                \"id\": 7,\n                \"name\": \"Immortality Field Resort\",\n                \"type\": \"Resort\",\n                \"dimension\": \"unknown\"\n            }\n        ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Travel Plan By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/travel_plans/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel_plans",
+						":id"
+					],
+					"query": [
+						{
+							"key": "expand",
+							"value": "false",
+							"description": "Param to expand each id to object",
+							"disabled": true
+						},
+						{
+							"key": "optimize",
+							"value": "false",
+							"description": "Param to optimize the order of stops",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "ID of plan to be retrieved"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success getting default response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "false",
+									"description": "Param to expand each id to object",
+									"disabled": true
+								},
+								{
+									"key": "optimize",
+									"value": "false",
+									"description": "Param to optimize the order of stops",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID of plan to be retrieved"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"travel_stops\": [\n        2,\n        7,\n        9,\n        11,\n        19\n    ]\n}"
+				},
+				{
+					"name": "Success getting expanded response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id?expand=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true",
+									"description": "Param to expand each id to object"
+								},
+								{
+									"key": "optimize",
+									"value": "false",
+									"description": "Param to optimize the order of stops",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID of plan to be retrieved"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "406"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"travel_stops\": [\n        {\n            \"id\": 2,\n            \"name\": \"Abadango\",\n            \"type\": \"Cluster\",\n            \"dimension\": \"unknown\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Immortality Field Resort\",\n            \"type\": \"Resort\",\n            \"dimension\": \"unknown\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Purge Planet\",\n            \"type\": \"Planet\",\n            \"dimension\": \"Replacement Dimension\"\n        },\n        {\n            \"id\": 11,\n            \"name\": \"Bepis 9\",\n            \"type\": \"Planet\",\n            \"dimension\": \"unknown\"\n        },\n        {\n            \"id\": 19,\n            \"name\": \"Gromflom Prime\",\n            \"type\": \"Planet\",\n            \"dimension\": \"Replacement Dimension\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Success getting optimized response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id?optimize=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true",
+									"description": "Param to expand each id to object",
+									"disabled": true
+								},
+								{
+									"key": "optimize",
+									"value": "true",
+									"description": "Param to optimize the order of stops"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID of plan to be retrieved"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"travel_stops\": [\n        19,\n        9,\n        2,\n        11,\n        7\n    ]\n}"
+				},
+				{
+					"name": "Success getting expanded and optimized response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id?expand=true&optimize=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true",
+									"description": "Param to expand each id to object"
+								},
+								{
+									"key": "optimize",
+									"value": "true",
+									"description": "Param to optimize the order of stops"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID of plan to be retrieved"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "406"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"travel_stops\": [\n        {\n            \"id\": 19,\n            \"name\": \"Gromflom Prime\",\n            \"type\": \"Planet\",\n            \"dimension\": \"Replacement Dimension\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Purge Planet\",\n            \"type\": \"Planet\",\n            \"dimension\": \"Replacement Dimension\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Abadango\",\n            \"type\": \"Cluster\",\n            \"dimension\": \"unknown\"\n        },\n        {\n            \"id\": 11,\n            \"name\": \"Bepis 9\",\n            \"type\": \"Planet\",\n            \"dimension\": \"unknown\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Immortality Field Resort\",\n            \"type\": \"Resort\",\n            \"dimension\": \"unknown\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Error ID not found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true",
+									"description": "Param to expand each id to object",
+									"disabled": true
+								},
+								{
+									"key": "optimize",
+									"value": "true",
+									"description": "Param to optimize the order of stops",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2",
+									"description": "ID of plan to be retrieved"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "34"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel plan not found.\"\n}"
+				},
+				{
+					"name": "Invalid ID provided",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true",
+									"description": "Param to expand each id to object",
+									"disabled": true
+								},
+								{
+									"key": "optimize",
+									"value": "true",
+									"description": "Param to optimize the order of stops",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a",
+									"description": "ID of plan to be retrieved"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel plan id must be an integer.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create new Travel Plan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"travel_stops\": [1,2,3]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/travel_plans",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel_plans"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success creating new plan",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [1,2,3]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "31"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"travel_stops\": [\n        1,\n        2,\n        3\n    ]\n}"
+				},
+				{
+					"name": "Invalid request body",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [\"a\",2,3]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "54"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel stops must be an array of integers.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Travel Plan",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"travel_stops\": [4,5,6]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/travel_plans/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel_plans",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "ID of plan to be changed"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success changing all stops",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [4,5,6]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID of plan to be changed"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "31"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"travel_stops\": [\n        4,\n        5,\n        6\n    ]\n}"
+				},
+				{
+					"name": "Invalid ID provided",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [4,5,6]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a",
+									"description": "ID of plan to be changed"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel plan id must be an integer.\"\n}"
+				},
+				{
+					"name": "Invalid body request",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [\"a\",5,6]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID of plan to be changed"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "54"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel stops must be an array of integers.\"\n}"
+				},
+				{
+					"name": "Error ID not found",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [4,5,6]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2",
+									"description": "ID of plan to be changed"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "34"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel plan not found.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add Travel Stops",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"travel_stops\": [7,8,9]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/travel_plans/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel_plans",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "ID of plan to be updated"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success adding new stops",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [4,5,6]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID of plan to be updated"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 1,\n    \"travel_stops\": [\n        1,\n        2,\n        3,\n        4,\n        5,\n        6\n    ]\n}"
+				},
+				{
+					"name": "Invalid ID provided",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [4,5,6]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "a",
+									"description": "ID of plan to be updated"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel plan id must be an integer.\"\n}"
+				},
+				{
+					"name": "Repetitive stops are not added",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [4,5,6]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID of plan to be updated"
+								}
+							]
+						}
+					},
+					"status": "Not Modified",
+					"code": 304,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						}
+					],
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Error ID not found",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"travel_stops\": [7,8,9]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2",
+									"description": "ID of plan to be updated"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "34"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel plan not found.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Travel Plan By Id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/travel_plans/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"travel_plans",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "ID of plan to be deleted"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Error ID not found",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2",
+									"description": "ID of plan to be deleted"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "34"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel plan not found.\"\n}"
+				},
+				{
+					"name": "Invalid ID provided",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "d",
+									"description": "ID of plan to be deleted"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Travel plan id must be an integer.\"\n}"
+				},
+				{
+					"name": "Success deleting plan",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/travel_plans/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"travel_plans",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID of plan to be deleted"
+								}
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=10000"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
