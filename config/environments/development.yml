@@ -11,5 +11,5 @@ logging:
 host: 0.0.0.0
 port_reuse: true
 process_count: 1
-database_url: postgres://postgres:password@localhost:5432/app_development
+database_url: postgres://postgres:password@db:5432/app_development
 auto_reload: true
