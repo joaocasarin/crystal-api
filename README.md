@@ -25,8 +25,9 @@ This will start the PostgreSQL database on port 5432 and the application on port
 Alternatively, if you have the database running locally or in another container, follow these steps:
 
 1. Install the project dependencies: `shards install`
-2. Run migrations: `amber db migrate`
-3. Run the application: `amber watch`
+2. Change the `db` hostname in the variable `database_url` in the file `config/environments/development.yml` to `localhost` or the IP address of the database container.
+3. Run migrations: `amber db migrate`
+4. Run the application: `amber watch`
 
 The application will be running on `http://localhost:3000` and will watch for any changes in the project files.
 
