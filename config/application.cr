@@ -20,5 +20,7 @@ require "../src/models/**"
 # End Generator Dependencies
 
 require "../src/utils/**"
+include GlobalTypes
+include Utils
 require "../src/controllers/**"
 require "./routes"
