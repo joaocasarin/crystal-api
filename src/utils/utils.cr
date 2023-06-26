@@ -35,11 +35,11 @@ module Utils
         new_travel_stops = TravelStops.new
 
         travel_stops.each do |travel_stop|
-        locations.each do |location|
-            if location["id"] == travel_stop
-            new_travel_stops << location
+            locations.each do |location|
+                if location["id"] == travel_stop
+                new_travel_stops << location
+                end
             end
-        end
         end
 
         return new_travel_stops
