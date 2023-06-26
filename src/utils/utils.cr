@@ -5,10 +5,10 @@ module Utils
     end
 
     #! MISSING get from database if exists
-    def parse_locations_to_object(ids : Array(Int32)) : TRAVEL_STOPS_TYPE
+    def parse_locations_to_object(ids : Array(Int32)) : TravelStops
         api_response = REMClient.get_locations(ids)
 
-        return TRAVEL_STOPS_TYPE.new if api_response.status_code != 200
+        return TravelStops.new if api_response.status_code != 200
 
         parsed_body = JSON.parse(api_response.body)
         locationsByIds = parsed_body["data"]["locationsByIds"].to_json
@@ -27,12 +27,12 @@ module Utils
         }
         end
 
-        return locations.as(TRAVEL_STOPS_TYPE)
+        return locations.as(TravelStops)
     end
 
     #* DONE expand travel stops to include location details
-    def expand_travel_stops(travel_stops : Array(Int32), locations : TRAVEL_STOPS_TYPE) : TRAVEL_STOPS_TYPE
-        new_travel_stops = TRAVEL_STOPS_TYPE.new
+    def expand_travel_stops(travel_stops : Array(Int32), locations : TravelStops) : TravelStops
+        new_travel_stops = TravelStops.new
 
         travel_stops.each do |travel_stop|
         locations.each do |location|
@@ -46,7 +46,7 @@ module Utils
     end
 
     #* DONE optimize travel stops based on popularity
-    def optimize_travel_stops(locations : TRAVEL_STOPS_TYPE) : Array(Int32)
+    def optimize_travel_stops(locations : TravelStops) : Array(Int32)
         # Calculate popularity of each location
         location_popularity = Hash(Int32, Int32).new
         locations.each do |location|
@@ -90,7 +90,7 @@ module Utils
     end
 
     #* DONE remove residents key from expanded travel stops
-    def remove_residents(travel_stops : TRAVEL_STOPS_TYPE)
+    def remove_residents(travel_stops : TravelStops)
         return travel_stops.map do |travel_stop|
         {
             id: travel_stop["id"],
